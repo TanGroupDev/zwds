@@ -2,7 +2,7 @@ import { GoogleGenAI } from "@google/genai";
 import { ProcessedImage } from "../types";
 import { REPORT_TEMPLATE } from "../constants";
 
-const API_KEY = "AIzaSyCIISCak2mzCsGW85aZdXTAWk1NXm984Hs";
+const API_KEY = "AIzaSyAhFzjWiu2DoVOhPNOo04ybXKAFPiUBUHg";
 if (!API_KEY) {
   console.error("API_KEY environment variable not set.");
 }
