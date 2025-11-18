@@ -1,0 +1,5 @@
+
+{
+  "name": "ZWDS Chart Segmenter",
+  "description": "An expert tool to automatically segment a Zi Wei Dou Shu (ZWDS) chart image. Upload a chart, and the application will identify and extract the 13 distinct palace boxes, providing them as individual downloadable JPEG files."
+}
