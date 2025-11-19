@@ -1,8 +1,7 @@
-
-import React from 'react';
-import JSZip from 'jszip';
-import { ProcessedImage } from '../types';
-import { DownloadIcon, RefreshIcon, AIIcon } from './icons';
+import React from "react";
+import JSZip from "jszip";
+import { ProcessedImage } from "../types";
+import { DownloadIcon, RefreshIcon, AIIcon } from "./icons";
 
 interface ResultsViewProps {
   images: ProcessedImage[];
@@ -10,7 +9,11 @@ interface ResultsViewProps {
   onGenerateReport: () => void;
 }
 
-const ResultsView: React.FC<ResultsViewProps> = ({ images, onReset, onGenerateReport }) => {
+const ResultsView: React.FC<ResultsViewProps> = ({
+  images,
+  onReset,
+  onGenerateReport,
+}) => {
   const handleDownloadAll = async () => {
     const zip = new JSZip();
     const promises = images.map(async (image) => {
@@ -19,14 +22,14 @@ const ResultsView: React.FC<ResultsViewProps> = ({ images, onReset, onGenerateRe
       zip.file(image.filename, blob);
     });
     await Promise.all(promises);
-    zip.generateAsync({ type: 'blob' }).then((content) => {
-      const link = document.createElement('a');
+    zip.generateAsync({ type: "blob" }).then((content) => {
+      const link = document.createElement("a");
       link.href = URL.createObjectURL(content);
-      link.download = 'zwds_chart_boxes.zip';
+      link.download = "zwds_chart_boxes.zip";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      URL.revokeObjectURL(link.href);
+      // URL.revokeObjectURL(link.href);
     });
   };
 
@@ -34,7 +37,8 @@ const ResultsView: React.FC<ResultsViewProps> = ({ images, onReset, onGenerateRe
     <div className="w-full">
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
         <h2 className="text-3xl font-bold text-gray-100">
-          Segmentation Complete: <span className="text-indigo-400">{images.length} Boxes Found</span>
+          Segmentation Complete:{" "}
+          <span className="text-indigo-400">{images.length} Boxes Found</span>
         </h2>
         <div className="flex flex-wrap justify-center gap-4">
           <button
@@ -62,7 +66,10 @@ const ResultsView: React.FC<ResultsViewProps> = ({ images, onReset, onGenerateRe
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
         {images.map((image) => (
-          <div key={image.id} className="group relative aspect-square overflow-hidden rounded-lg shadow-lg bg-gray-800">
+          <div
+            key={image.id}
+            className="group relative aspect-square overflow-hidden rounded-lg shadow-lg bg-gray-800"
+          >
             <img
               src={image.dataUrl}
               alt={`Segmented Box ${image.id + 1}`}
