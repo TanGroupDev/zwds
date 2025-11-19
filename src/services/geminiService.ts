@@ -6,7 +6,7 @@ import { REPORT_TEMPLATE } from "../constants";
 // CONFIG
 // =======================================
 const API_KEY =
-  process.env.GEMINI_API_KEY || "AIzaSyCIISCak2mzCsGW85aZdXTAWk1NXm984Hs";
+  process.env.GEMINI_API_KEY || "AIzaSyC_F1R-gOH0mxHlHT4mFP2O7ii8XKEm56M";
 
 if (!API_KEY) {
   console.error("❌ GEMINI_API_KEY environment variable not set.");
