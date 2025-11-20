@@ -14,21 +14,45 @@ export default function LoginPage() {
     setTimeout(() => setToast({ show: false, message: "", type: "" }), 2000);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (username.trim() === "TanGroup" && password.trim() === "Lauser@3a#") {
-      // SIMPAN LOGIN STATUS
-      localStorage.setItem("isLoggedIn", "true");
+    showToast("Checking credentials...", "loading");
 
+    try {
+      const res = await fetch(
+        "https://tangroup.app.n8n.cloud/webhook-test/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: username.trim(),
+            password: password.trim(),
+          }),
+        },
+      );
+
+      const json = await res.json();
+
+      if (!json.success) {
+        showToast(json.message || "Invalid credentials", "error");
+        return;
+      }
+
+      // -----------------------------
+      // LOGIN SUKSES 💯
+      // -----------------------------
       showToast("Login success!", "success");
 
-      // REDIRECT SETELAH TOAST
+      // Simpan login state
+      localStorage.setItem("isLoggedIn", "true");
+
+      // Redirect dengan delay biar toast muncul dulu
       setTimeout(() => {
-        window.location.reload(); // reload supaya App.tsx baca login state
+        window.location.href = "/";
       }, 800);
-    } else {
-      showToast("Invalid username or password!", "error");
+    } catch (err) {
+      showToast("Failed to connect to authentication server", "error");
     }
   };
 
